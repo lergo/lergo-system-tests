@@ -1,0 +1,34 @@
+{
+  "name": "lergo-system-tests",
+  "description": "system tests for lergo",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "test": "grunt"
+  },
+  "dependencies": {
+    "log4js": "*",
+    "async": "*",
+    "lodash": "*",
+    "node-rest-client": "~1.0.0",
+    "webdriverio": "~2.4.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-contrib-watch": "~0.4.0",
+    "matchdep": "~0.1.2",
+    "mocha": "*",
+    "grunt-mocha-test": "*",
+    "expect": "*",
+    "jshint-stylish": "~1.0.0",
+    "istanbul": "~0.3.2",
+    "grunt-mocha-istanbul": "~2.2.0",
+    "grunt-aws": "~0.4.0"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
