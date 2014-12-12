@@ -2,3 +2,5 @@ dev
 .idea
 node_modules
 results.xml
+.vagrant
+npm-debug.log

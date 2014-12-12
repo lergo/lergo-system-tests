@@ -1,0 +1,1 @@
+export ROOT_DIR=/home/vagrant/lergo-system-tests

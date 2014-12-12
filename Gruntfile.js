@@ -18,30 +18,43 @@ module.exports = function (grunt) {
         logger.info('path is defined');
     }
 
-//    var s3Config = {};
-//    try {
-//        var s3path = process.env.LERGO_S3 || path.resolve('./dev/s3.json');
-//        logger.info('looking for s3.json at ' , s3path );
-//        s3Config = require( s3path );
-//    }catch(e){
-//        logger.error('s3 json is undefined, you will not be able to upload to s3',e);
-//    }
+    var s3Config = {};
+    try {
+        var s3path = process.env.LERGO_S3 || path.resolve('./conf/dev/s3.json');
+        logger.info('looking for s3.json at ' , s3path );
+        s3Config = require( s3path );
+    }catch(e){
+        logger.error('s3 json is undefined, you will not be able to upload to s3',e);
+    }
 
     grunt.initConfig({
-//        s3:{
-//            uploadCoverage: {
-//                options: {
-//                    accessKeyId: s3Config.accessKey,
-//                    secretAccessKey: s3Config.secretAccessKey,
-//                    bucket: s3Config.bucket,
-//                    enableWeb:true,
-//                    gzip:true
-//                },
-//                cwd: 'coverage/',
-//                src: '**',
-//                dest: 'ri-coverage/'
-//
-//            },
+        connect: {
+            server: {
+                options: {
+                    port: 8000,
+                    base: {
+                        path: 'build/synced_folder/xunit-renderer',
+                        options: {
+                            index: 'index.html'
+                        }
+                    }
+                }
+            }
+        },
+        s3:{
+            uploadResults: {
+                options: {
+                    accessKeyId: s3Config.accessKey,
+                    secretAccessKey: s3Config.secretAccessKey,
+                    bucket: s3Config.bucket,
+                    enableWeb:true,
+                    gzip:false
+                },
+                cwd: 'build/synced_folder/xunit-renderer',
+                src: '*',
+                dest: 'system-tests/'
+
+            }
 //            uploadBuildStatus: {
 //                options: {
 //                    accessKeyId: s3Config.accessKey,
@@ -53,15 +66,15 @@ module.exports = function (grunt) {
 //                cwd: 'buildstatus/',
 //                src: '**'
 //            }
-//        },
+        },
 
         mochaTest: {
             test: {
                 options: {
-                    reporter: 'xunit',
-                    captureFile: 'results.xml'
+                    reporter: ['xunit' ],
+                    captureFile: 'build/synced_folder/xunit-renderer/results.xml'
                 },
-                src: ['src/tests/sanity/**/*.js']
+                src: ['src/tests/**/*.spec.js']
             }
 
         },
@@ -115,8 +128,8 @@ module.exports = function (grunt) {
     ]);
 
 
-    var outputFile = process.env.MOCHA_OUTPUT_FILE || 'results.xml';
-    grunt.registerTask('cleanXunitFile', 'Remove Selenium/WebDriver output from xunit file', function() {
+    var outputFile = process.env.MOCHA_OUTPUT_FILE || 'build/synced_folder/xunit-renderer/results.xml';
+    grunt.registerTask('cleanXunitFile', 'Remove Selenium/WebDriver output from xunit file', function () {
         if (grunt.file.exists('./' + outputFile)) {
             var file = grunt.file.read('./' + outputFile);
             if (file.indexOf('<testsuite')) {
@@ -126,5 +139,6 @@ module.exports = function (grunt) {
         else {
             grunt.log.error('"cleanXunitFile" task was specified but file ' + outputFile + ' does not exist.');
         }
+
     });
 };

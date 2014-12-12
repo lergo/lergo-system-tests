@@ -5,7 +5,29 @@ logger.info('running sanity tests');
 
 
 describe('system tests', function(){
-    it('should run tests', function(){
-        expect(5).toBe(5);
-    })
+    describe('system tests', function(){
+        it('should run tests', function(done){
+            expect(5).toBe(5);
+            done();
+        });  xit('should run tests', function(done){
+            expect(5).toBe(5);
+            done();
+        });  it('should run tests', function(done){
+            expect(5).toBe(5);
+            done();
+        });  it('should run tests', function(done){
+            expect(5).toBe(5);
+            done();
+        });   it('should run tests', function(done){
+            expect(5).toBe(5);
+            done();
+        });  it('should run tests', function(done){
+            expect(5).toBe(5);
+            done();
+        });  it('should run tests', function(done){
+            expect(5).toBe(5);
+            done();
+        });
+    });
+
 });
